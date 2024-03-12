@@ -75,8 +75,8 @@ button {
   cursor: pointer;
 }
 
-@media (max-height: 800px) {
+@media (max-height: 900px) {
   body {
-    height: 900px;
+    height: 950px;
   }
 }

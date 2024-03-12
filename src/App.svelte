@@ -65,13 +65,5 @@
     height: 80%;
   }
 
-  @media (max-height: 900px) {
-    header {
-      height: 15%;
-    }
 
-    section {
-      height: 85%;
-    }
-  }
 </style>
