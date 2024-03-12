@@ -32,8 +32,7 @@ body {
   height: 100vh;
 }
 
-
-p{
+p {
   font-size: 1rem;
 }
 
@@ -74,4 +73,10 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+@media (max-height: 800px) {
+  body {
+    height: 900px;
+  }
 }

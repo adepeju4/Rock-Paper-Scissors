@@ -3,6 +3,7 @@
   import confetti from "canvas-confetti";
   import playerAvatar from "../assets/rukia.jpeg";
   import rivalAvatar from "../assets/ichigo.jpeg";
+  import celebration_music from "../assets/celebrate.mp3";
 
   export let stopGame: () => void;
 
@@ -17,7 +18,8 @@
   let draws: number = 0;
   let timer: number = 5;
   let intervalId: number;
- 
+
+  const confettiSound = new Audio(celebration_music);
 
   onMount(() => {
     reset();
@@ -76,7 +78,7 @@
     stopGame();
   }
 
-  $: console.log(userChoice, result);
+
 
   $: if (result === "You win!") {
     confetti({
@@ -84,11 +86,21 @@
       spread: 70,
       origin: { y: 0.6 },
     });
-    result = "";
+
+    confettiSound.currentTime = 5;
+    confettiSound
+      .play()
+      .catch((error) => console.error("Error playing audio:", error));
+    setTimeout(() => {
+      confettiSound.pause();
+      confettiSound.currentTime = 5;
+    }, 3000);
+
+    result = "Congratulations! You won this round";
   }
 </script>
 
-<h4>Choose a Move</h4>
+<h4>{result || "Choose a Move"}</h4>
 
 <div class="game-container">
   <div class="player">
@@ -130,7 +142,7 @@
         <p>computer is choosing...</p>
       {/if}
     </div>
-    <p>Rival: {computerChoice || "Let's Gooooo"}</p>
+    <p>Computer: {computerChoice || "Let's Gooooo"}</p>
     <div class="avatar">
       <img src={rivalAvatar} alt="Rival Avatar" />
     </div>
@@ -146,7 +158,9 @@
     justify-content: space-between;
   }
   .choice {
-    min-height: 90px;
+    cursor: pointer;
+    width: 100px;
+    height: 90px;
     margin: 0;
     padding: 0;
     background-color: transparent;
@@ -159,25 +173,13 @@
   }
 
   .choice.rock {
-    width: 100px;
-    height: 90px;
     background: url(../assets/rock.png) no-repeat center center;
-
-    cursor: pointer;
   }
   .choice.paper {
-    width: 100px;
-    height: 90px;
     background: url(../assets/paper.png) no-repeat center center;
-
-    cursor: pointer;
   }
   .choice.scissors {
-    width: 100px;
-    height: 90px;
     background: url(../assets/scissors.png) no-repeat center center;
-
-    cursor: pointer;
   }
 
   img {
@@ -219,5 +221,14 @@
 
   .picked {
     border: 2px solid greenyellow;
+  }
+
+  @media (max-height: 800px) {
+    .choice.paper,
+    .choice.rock,
+    .choice.scissors {
+      width: 80px;
+      height: 70px;
+    }
   }
 </style>
