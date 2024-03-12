@@ -65,7 +65,7 @@
     height: 80%;
   }
 
-  @media (max-height: 800px) {
+  @media (max-height: 900px) {
     header {
       height: 15%;
     }
